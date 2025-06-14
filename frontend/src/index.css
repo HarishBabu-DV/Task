@@ -5,10 +5,12 @@ body{
     box-sizing: border-box;
 }
 @layer components{
-    .hero-section{
-        @apply w-full h-screen flex flex-col items-center justify-center gap-6;
+    .gradient-background{
         background: #ededed;
         background: linear-gradient(28deg, rgba(237, 237, 237, 1) 0%, rgba(247, 247, 247, 1) 50%, rgba(235, 235, 235, 1) 100%);
+    }
+    .hero-section{
+        @apply w-full h-screen flex flex-col items-center justify-center gap-6 ;
     }
     .company-name{
         background: linear-gradient(to right, #4776E6 0%, #8E54E9  51%, #4776E6  100%);
