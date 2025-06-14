@@ -1,1 +1,48 @@
 @import "tailwindcss";
+
+@layer components{
+    .hero-section{
+        @apply w-full h-screen flex flex-col items-center justify-center gap-6;
+        background: #ededed;
+        background: linear-gradient(28deg, rgba(237, 237, 237, 1) 0%, rgba(247, 247, 247, 1) 50%, rgba(235, 235, 235, 1) 100%);
+    }
+    .company-name{
+        background: linear-gradient(to right, #4776E6 0%, #8E54E9  51%, #4776E6  100%);
+        background-clip: text;
+        -webkit-background-clip: text;
+        color:transparent;
+    }
+    .blue-gradient {
+        background-image: linear-gradient(to right, #4776E6 0%, #8E54E9  51%, #4776E6  100%);
+    }
+    .view-post-button{
+        @apply text-xl bg-blue-700 text-white font-semibold px-6 py-2 rounded-[40px] transition-shadow duration-300 cursor-pointer hover:shadow-[0px_4px_10px_#888888] hover:transition-shadow hover:duration-300;
+    }
+
+       
+         
+    
+/*          
+         .btn-grad {background-image: linear-gradient(to right, #4776E6 0%, #8E54E9  51%, #4776E6  100%)}
+         .btn-grad {
+            margin: 10px;
+            padding: 15px 45px;
+            text-align: center;
+            text-transform: uppercase;
+            transition: 0.5s;
+           
+            color: white;            
+            box-shadow: 0 0 20px #eee;
+            border-radius: 10px;
+            display: block;
+          }
+
+          .btn-grad:hover {
+            background-position: right center; /* change the direction of the change here */
+            /* color: #fff;
+            text-decoration: none; */
+          /* s */
+          
+       
+         
+}
