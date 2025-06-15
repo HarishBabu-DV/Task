@@ -16,10 +16,6 @@ const PostsSchema=new mongoose.Schema({
         type:String,
         required:true,
         trim:true
-    },
-    id:{
-        type:Number,
-        trim:true
     }
 })
 
