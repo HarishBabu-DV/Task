@@ -276,7 +276,11 @@ const Posts = () => {
              <Button className={'bg-gray-200 cursor-pointer text-black text-lg w-1/2 px-6 py-2 rounded-[5px] shadow-[0_0_5px_#000]'} onClick={()=>setIsDeleteAlertVisible(false)}>
               Cancel
             </Button>
-             <Button className={'bg-black text-white cursor-pointer text-lg w-1/2 px-6 py-2 rounded-[5px] '} onClick={()=>handleDeletePost(posts[selectedIndex]?._id)}>
+             <Button className={'bg-black text-white cursor-pointer text-lg w-1/2 px-6 py-2 rounded-[5px] '} onClick={()=>{
+              handleDeletePost(posts[selectedIndex]?._id)
+              setIsDeleteAlertVisible(false)
+            }
+            }>
               Delete
             </Button>
             </div>
