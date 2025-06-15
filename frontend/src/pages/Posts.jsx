@@ -1,13 +1,35 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import { storePosts } from '../services/api/ApiServices'
-
+import { createPost, deletePost, deletePosts, retrievePosts, storePosts, updatePost } from '../services/api/ApiServices'
+import { toast } from 'sonner'
+import { FaEdit } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
+import { MdAddCircle } from "react-icons/md";
+import Button from '../components/Button';
 const Posts = () => {
   const [recievedPosts,setRecievedPosts]=useState([])
   const [posts,setPosts]=useState([])
-  const [loading,setLoading]=useState(false)
+  const tableHeadings=['userId','id','title','body','actions']
+  const [isEdit,setIsEdit]=useState(false)
+  const [isFormVisible,setIsFormVisible]=useState(false)
+  const [isDeleteAlertVisible,setIsDeleteAlertVisible]=useState(false)
+  const [isButtonLoading,setIsButtonLoading]=useState(false)
+  const [selectedIndex,setSelectedIndex]=useState('')
+  const [newPost,setNewPost]=useState({
+    userId:'',
+    title:'',
+    body:''    
+  })
+
+  const handleOnChange=(e)=>{
+    setNewPost({
+      ...newPost,
+      [e.target.name]:e.target.value
+    })
+  }
+
   //Initially used jsonplaceholder api to fetch data
-  const receivePosts=async () => {
+  const receivePostsFromJsonPlaceholder=async () => {
     try {
       setLoading(true)
       const response=await axios.get('https://jsonplaceholder.typicode.com/posts')
@@ -22,55 +44,245 @@ const Posts = () => {
     }
   }
 
+// API method to store posts retrieved from jsonplaceholder 
   const storeNewPosts=async () => {
     try {
-      const response=await storePosts(receivePosts)
+      const response=await storePosts(recievedPosts)
       if(response){
         console.log('posts stored');
-        setPosts(response?.data?.data)
+        setPosts(response?.data)
       }
     } catch (error) {
       console.log(error);
     }
   }
-  
-  // console.log(posts);
-  // const tableHeadings=Object.keys(posts[0])
-  // console.log(tableHeadings);
-  console.log("posts :",posts);
-  useEffect(()=>{
-    receivePosts()
-  },[])
-  
-  console.log(recievedPosts);
-  return (
-    <section className='gradient-background '>
-      <h1 className="text-center text-[2.5rem] font-bold max-md:text-[4rem] max-sm:text-[2.5rem] company-name">Posts</h1>
-      {
-        loading ? <h1>Loading</h1> : null
+
+  //API method to delete all posts
+  const deleteAllPosts=async () => {
+    const response=await deletePosts();
+    try {
+       if(response){
+        console.log('posts deleted');
       }
-      <table>
-        <thead>
-        {/* {
-         tableHeadings?.map(tableHeading=>(
-          <th>{tableHeading}</th>
-         ))
-        } */}
-        </thead>  
-        <tbody>
-          {/* {
-            posts && posts?.map(post=>(
-              <tr>
-                <td>{post.userId}</td>
-                <td>{post.id}</td>
-                <td>{post.title}</td>
-                <td>{post.body}</td>
-              </tr>
-            ))
-          } */}
-        </tbody>
-      </table>
-      <button onClick={()=>storeNewPosts()} className='bg-black text-white py-1.5 px-4 hover:cursor-pointer'>store posts</button>
+    } catch (error) {
+      console.log(error);
+      
+    }
+   
+  }
+
+  //API method to get all posts from MongoDB
+  const getPosts=async () => {
+    try {
+      const response=await retrievePosts();
+      console.log(response);
+      
+      if(response){
+        console.log('posts received');
+        setPosts(response?.data?.data)
+      } else{
+        toast.error('Something went wrong')
+      }
+
+    } catch (error) {
+        console.log(error);
+        toast.error("Can/'t fetch posts  ")
+    }
+  }
+   //API method to create post from MongoDB
+   const addPost=async (postData) => {
+      try {
+        setIsButtonLoading(true)
+        const response=await createPost(postData)
+        if(response){
+          const {success}=response?.data
+          if(success){
+            toast.success("Post added successfully")
+            setNewPost({
+               userId:'',
+                title:'',
+                body:''  
+            })
+            getPosts()
+            setIsButtonLoading(false)
+            setIsFormVisible(false)
+          }
+        }
+        else{
+          toast.error('Something went wrong. Try again`')
+          setIsButtonLoading(false)
+        }
+      } catch (error) {
+        console.log(error);
+        setIsButtonLoading(false)
+        toast.error('Post creation failed');
+      }
+   }
+   //API method to update a post from MongoDB
+   const handleupdatePost=async (postId,updatedPostData) => {
+      try {
+          setIsButtonLoading(true)
+        const response=await updatePost(postId,updatedPostData)
+        if(response){
+          const {success}=response?.data
+          if(success){
+            toast.success("Post updated successfully")
+            setNewPost({
+               userId:'',
+                title:'',
+                body:''  
+            })
+            getPosts()
+            setIsEdit(false);
+            setIsButtonLoading(false)
+            setIsFormVisible(false)
+
+          }
+        }
+        else{
+          toast.error('Something went wrong. Try again`')
+          setIsButtonLoading(false)
+        }
+      } catch (error) {
+        console.log(error);
+        setIsButtonLoading(false)
+        toast.error('Post creation failed');
+      }
+   }
+   
+   //API method to delete a post from MongoDB
+   const handleDeletePost=async (postId) => {
+    try {
+        const response=await deletePost(postId)
+        if(response){
+          const {success}=response?.data
+          if(success){
+            toast.success("Post deleted successfully")
+            getPosts()
+          }
+        }
+        else{
+          toast.error('Something went wrong. Try again`')
+        }
+      } catch (error) {
+        console.log(error);
+        toast.error('Post deletion failed');
+      }
+   }
+
+
+  useEffect(()=>{
+    getPosts()
+  },[])
+  console.log(recievedPosts);
+  console.log(tableHeadings);
+  console.log("posts :",posts);
+  console.log(newPost);
+  
+  return (
+    <section className={`gradient-background px-10 relative w-full h-screen`}>
+      <div className={`${isFormVisible || isDeleteAlertVisible ? `opacity-40 `:null}`}>
+        <h1 className="text-center text-[2.5rem] font-bold max-md:text-[4rem] max-sm:text-[2.5rem] company-name">
+          Posts
+        </h1>
+        <div className='flex justify-end py-4 cursor-pointer'>
+          <MdAddCircle className='text-[3rem]' onClick={()=>setIsFormVisible(true)}/>
+        </div>
+          <div className='h-[80vh] overflow-y-scroll'>
+            <table className='bg-white border-collapse shadow-[0_0_12px_#bababa] w-full  '>
+              <thead className='bg-[#3b3b3b] sticky top-0 z-30'>
+                <tr>
+                  {
+                    tableHeadings?.map((tableHeading,index)=>(
+                      <th className='capitalize p-3 text-white ' key={index}>{tableHeading}</th>
+                    ))
+                  }
+                </tr>
+              </thead>  
+              <tbody>
+                { 
+                  posts && Array.isArray(posts) ? posts.map((eachPost,index) => (
+                    <tr className='border-y-[1px] border-gray-400' key={index}>
+                      <td className='table-data'>{eachPost.userId}</td>
+                      <td className='table-data'>{eachPost.id}</td>
+                      <td className='table-data'>{eachPost.title}</td>
+                      <td className='table-data'>{eachPost.body}</td>
+                      <td className='px-3 py-1.5 text-center flex items-center gap-2'>
+                        <FaEdit className='text-[1.7rem] cursor-pointer text-blue-500' onClick={()=>{
+                          setSelectedIndex(Number(index))
+                          setIsEdit(true)
+                          setIsFormVisible(true)
+                          
+                        }}/>
+                        <MdDelete className='text-[1.7rem] cursor-pointer text-red-400' onClick={
+                          ()=>{
+                           setSelectedIndex(Number(index))
+                           setIsDeleteAlertVisible(true)
+                          }
+                        }/>
+                      </td>
+                    </tr>
+                  )) : null
+                }
+              </tbody>
+            </table>
+          </div>
+      </div>
+      {/* Form to create or edit the posts */}
+      {
+        isFormVisible && (
+        <form action="" className='dialog-component-container'>
+          <h2 className='text-[1.5rem] font-bold'>{isEdit ? 'Edit': 'Create'} Post</h2>
+          <div className='flex flex-col gap-1.5'>
+              <label className='label-component' htmlFor="userid">userId</label>
+              <input className='input-component'  type="text" placeholder='Enter user Id' name='userid' id='userid' value={newPost.userId} onChange={(e)=>setNewPost({
+                ...newPost,
+                userId:Number(e.target.value)
+              })}/>
+          </div>
+          <div className='flex flex-col gap-1.5'>
+              <label className='label-component' htmlFor="title">Title</label>
+              <input className='input-component'  type="text" placeholder='Enter Title' name='title' id='title' value={ newPost.title} onChange={handleOnChange}/>
+          </div>
+          <div className='flex flex-col gap-1.5'>
+              <label className='label-component' htmlFor="body">Body</label>
+              <input className='input-component'  type="text" placeholder='Enter Body' name='body' id='body' value={newPost.body} onChange={handleOnChange}/>
+          </div>
+          <div className='flex justify-around gap-4'>
+            <Button className={'bg-gray-200 cursor-pointer text-black text-lg w-1/2 px-6 py-2 rounded-[5px] shadow-[0_0_5px_#000]'} onClick={()=>setIsFormVisible(!isFormVisible)}>
+              Cancel
+            </Button>
+            <Button className={'bg-black text-white w-1/2 text-lg px-6 py-2 rounded-[5px] disabled:bg-gray-300 disabled:text-gray-600 disabled:cursor-not-allowed cursor-pointer'} onClick={()=>isEdit ? handleupdatePost(posts[selectedIndex]?._id,{
+              userId:newPost.userId,
+              title:newPost.title,
+              body:newPost.body,
+              id:posts[selectedIndex].id,
+              _id:posts[selectedIndex]._id,
+              _v:posts[selectedIndex]._v
+            }) : addPost(newPost)} disabled={isButtonLoading ? true : false}>
+              {isEdit ? 'Edit' : 'Create'}  
+            </Button> 
+          </div>
+      </form>
+        )
+      }
+
+      {/* Delete Confirmation message  */}
+      {
+        isDeleteAlertVisible && (
+          <div className='dialog-component-container'>
+            <p>Are You sure want to Delete this post ?</p>
+            <div className='flex justify-around gap-5'>
+             <Button className={'bg-gray-200 cursor-pointer text-black text-lg w-1/2 px-6 py-2 rounded-[5px] shadow-[0_0_5px_#000]'} onClick={()=>setIsDeleteAlertVisible(false)}>
+              Cancel
+            </Button>
+             <Button className={'bg-black text-white cursor-pointer text-lg w-1/2 px-6 py-2 rounded-[5px] '} onClick={()=>handleDeletePost(posts[selectedIndex]?._id)}>
+              Delete
+            </Button>
+            </div>
+          </div>
+        )
+      }
     </section>
   )
 }

@@ -13,19 +13,43 @@ const storePosts=async (listOfPosts)=>{
 }
 //Retrieve posts
 const retrievePosts=async ()=>{
-   return await API.get('/api/v1/posts');
+   return await API.get('/api/v1/posts',{
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
 }
 //Create Post
-const createPost=async ()=>{
-   return await API.post('/api/v1/posts/add');
+const createPost=async (postData)=>{
+   return await API.post('/api/v1/posts/add',postData,{
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
 }
 //Update Post
-const updatePost=async ()=>{
-   return await API.put('/api/v1/posts/update/:id');
+const updatePost=async (dataId,updatedData)=>{
+   return await API.put(`/api/v1/posts/update/${dataId}`,updatedData,{
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
 }
 //Delete Post
-const deletePost=async ()=>{
-   return await API.put('/api/v1/posts/delete/:id');
+const deletePost=async (dataId)=>{
+   return await API.delete(`/api/v1/posts/delete/${dataId}`,{
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
 }
 
-export {storePosts,retrievePosts,createPost,updatePost,deletePost}
+//Delete all posts
+const deletePosts=async () => {
+   return await API.delete('/api/v1/posts/delete',{
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+}
+export {storePosts,retrievePosts,createPost,updatePost,deletePost,deletePosts}
