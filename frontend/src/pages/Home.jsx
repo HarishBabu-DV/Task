@@ -4,7 +4,7 @@ const Home = () => {
   return (
     <section className="hero-section gradient-background">
       {/* MERN STACK Development heading  */}
-      <h1 className="text-center text-[5rem] font-bold max-md:text-[4rem] max-sm:text-[2.5rem] company-name ">MERN STACK Development</h1>
+      <h1 className="text-center text-[5rem] font-bold max-lg:text-[4rem] max-md:text-[4rem] max-sm:text-[2.5rem] company-name ">MERN STACK Development</h1>
       {/* Full Stack Development Task */}
       <h1 className="text-center text-5xl max-md:text-4xl max-sm:text-2xl font-bold">Full Stack Development Task</h1>
       {/* List of Tasks  */}
