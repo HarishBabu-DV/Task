@@ -76,7 +76,6 @@ const Posts = () => {
     try {
       const response=await retrievePosts();
       console.log(response);
-      
       if(response){
         console.log('posts received');
         setPosts(response?.data?.data)
