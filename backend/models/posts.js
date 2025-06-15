@@ -3,7 +3,7 @@ const autoIncrement=require('mongoose-sequence')(mongoose)
 
 const PostsSchema=new mongoose.Schema({
     userId:{
-        type: String,
+        type: Number,
         required:true,
         trim:true
     },
@@ -15,6 +15,10 @@ const PostsSchema=new mongoose.Schema({
     body:{
         type:String,
         required:true,
+        trim:true
+    },
+    id:{
+        type:Number,
         trim:true
     }
 })

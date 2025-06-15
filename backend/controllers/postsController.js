@@ -136,4 +136,18 @@ const deletePost = async (req,res) => {
     }
 } 
 
-module.exports={storePosts,retrievePosts,addPosts,updatePost,deletePost}
+const deletePosts=async (req,res) => {
+    try {
+        await posts.deleteMany({});
+        res.status(200).json({ 
+            success: true, 
+            message: 'All posts deleted successfully' 
+        });
+    } 
+    catch (error) {
+    res.status(500).json({ 
+        success: false, 
+        message: 'Internal Server Error' });
+    }
+}
+module.exports={storePosts,retrievePosts,addPosts,updatePost,deletePost,deletePosts}
