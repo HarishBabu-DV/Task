@@ -87,9 +87,9 @@ const addPosts=async (req,res) => {
 //Update Post
 const updatePost=async (req,res) => {
     try {
-        const {userId,title,body}=req.body;
+        const updatedData=req.body;
         const postId=req.params.id;
-        const updatedPost=await posts.findByIdAndUpdate(postId,{userId:userId,title:title,body:body},{ new:true})
+        const updatedPost=await posts.findByIdAndUpdate(postId,updatedData,{ new:true})
         if(updatedPost){
             res.status(201).json({
                 success:true,
