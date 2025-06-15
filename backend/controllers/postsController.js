@@ -1,6 +1,6 @@
 const posts=require('../models/posts')
 
-//Store Posts from jsonplaceholder typicode
+//API to Store Posts from jsonplaceholder typicode
 const storePosts=async (req,res) => {
     try {
         const postsToStore=req.body
@@ -29,7 +29,7 @@ const storePosts=async (req,res) => {
     }
 } 
 
-//Retrieve Posts
+//API to Retrieve Posts from MongoDB
 const retrievePosts=async (req,res) => {
     try {
         const postsList=await posts.find()
@@ -53,8 +53,7 @@ const retrievePosts=async (req,res) => {
     }
 } 
 
-//Add Posts
-
+//API to Create Posts in MongoDB
 const addPosts=async (req,res) => {
     try {
         const {userId,title,body}=req.body
@@ -84,7 +83,7 @@ const addPosts=async (req,res) => {
     }
 } 
 
-//Update Post
+//API to Update Post in MongoDB
 const updatePost=async (req,res) => {
     try {
         const updatedData=req.body;
@@ -111,7 +110,7 @@ const updatePost=async (req,res) => {
     }
 } 
 
-//Delete Post
+//API to Delete Post in MongoDB
 const deletePost = async (req,res) => {
     try {
         const postId=req.params.id;
@@ -136,6 +135,8 @@ const deletePost = async (req,res) => {
     }
 } 
 
+//API to Delete Posts in MongoDB 
+//used for testing purpose
 const deletePosts=async (req,res) => {
     try {
         await posts.deleteMany({});
