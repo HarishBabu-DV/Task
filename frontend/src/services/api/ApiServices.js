@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API=axios.create({
-    baseURL:import.meta.env.VITE_API_BASEURI
+    baseURL:import.meta.env.VITE_BASEURI
 })
 //Store posts retrieved from json placeholder
 const storePosts=async (listOfPosts)=>{
