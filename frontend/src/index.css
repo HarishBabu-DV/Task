@@ -39,6 +39,7 @@ body{
         background: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4));
     }
     .dialog-component-container{
-        @apply bg-[#f9f9f9] shadow-2xl w-[550px] px-8 py-10 rounded-[10px] flex flex-col justify-between gap-6 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50;
+        @apply bg-[#f9f9f9] shadow-2xl md:w-[550px] sm:w-[400px]  px-8 py-10 rounded-[10px] flex flex-col justify-between gap-6 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50;
+        @apply  max-sm:w-[300px] max-sm:py-6 max-sm:px-6;
     }
 }

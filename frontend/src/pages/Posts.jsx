@@ -179,7 +179,7 @@ const Posts = () => {
   console.log(newPost);
   
   return (
-    <section className={`gradient-background px-10 relative w-full h-screen`}>
+    <section className={`gradient-background px-4 md:px-10 relative w-full`}>
       <div className={`${isFormVisible || isDeleteAlertVisible ? `opacity-40 `:null}`}>
         <h1 className="text-center text-[2.5rem] font-bold max-md:text-[4rem] max-sm:text-[2.5rem] company-name">
           Posts
@@ -187,13 +187,14 @@ const Posts = () => {
         <div className='flex justify-end py-4 cursor-pointer'>
           <MdAddCircle className='text-[3rem]' onClick={()=>setIsFormVisible(true)}/>
         </div>
-          <div className='h-[80vh] overflow-y-scroll'>
-            <table className='bg-white border-collapse shadow-[0_0_12px_#bababa] w-full  '>
+          <div className='h-[80vh] overflow-y-scroll shadow-[0_0_12px_#bababa]'>
+            <table className='bg-white border-collapse  w-full max-md:w-max'>
               <thead className='bg-[#3b3b3b] sticky top-0 z-30'>
                 <tr>
                   {
                     tableHeadings?.map((tableHeading,index)=>(
-                      <th className='capitalize p-3 text-white ' key={index}>{tableHeading}</th>
+                      <th className='capitalize p-3 text-white text-left' key={index}>
+                        {tableHeading}</th>
                     ))
                   }
                 </tr>
@@ -204,9 +205,9 @@ const Posts = () => {
                     <tr className='border-y-[1px] border-gray-400' key={index}>
                       <td className='table-data'>{eachPost.userId}</td>
                       <td className='table-data'>{eachPost.id}</td>
-                      <td className='table-data'>{eachPost.title}</td>
-                      <td className='table-data'>{eachPost.body}</td>
-                      <td className='px-3 py-1.5 text-center flex items-center gap-2'>
+                      <td className='table-data text-left'>{eachPost.title}</td>
+                      <td className='table-data text-left'>{eachPost.body}</td>
+                      <td className='px-3 py-1.5 text-center flex justify-center items-center gap-2'>
                         <FaEdit className='text-[1.7rem] cursor-pointer text-blue-500' onClick={()=>{
                           setSelectedIndex(Number(index))
                           setIsEdit(true)
@@ -248,10 +249,10 @@ const Posts = () => {
               <input className='input-component'  type="text" placeholder='Enter Body' name='body' id='body' value={newPost.body} onChange={handleOnChange}/>
           </div>
           <div className='flex justify-around gap-4'>
-            <Button className={'bg-gray-200 cursor-pointer text-black text-lg w-1/2 px-6 py-2 rounded-[5px] shadow-[0_0_5px_#000]'} onClick={()=>setIsFormVisible(!isFormVisible)}>
+            <Button className={'bg-gray-200 cursor-pointer text-black text-lg w-1/2 px-6 py-2 rounded-[5px] shadow-[0_0_5px_#000] max-sm:text-[0.95rem]'} onClick={()=>setIsFormVisible(!isFormVisible)}>
               Cancel
             </Button>
-            <Button className={'bg-black text-white w-1/2 text-lg px-6 py-2 rounded-[5px] disabled:bg-gray-300 disabled:text-gray-600 disabled:cursor-not-allowed cursor-pointer'} onClick={()=>isEdit ? handleupdatePost(posts[selectedIndex]?._id,{
+            <Button className={'bg-black text-white w-1/2 text-lg px-6 py-2 rounded-[5px] disabled:bg-gray-300 disabled:text-gray-600 disabled:cursor-not-allowed cursor-pointer max-sm:text-[0.95rem]'} onClick={()=>isEdit ? handleupdatePost(posts[selectedIndex]?._id,{
               userId:newPost.userId,
               title:newPost.title,
               body:newPost.body,
