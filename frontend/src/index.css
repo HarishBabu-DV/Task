@@ -1,54 +1,67 @@
 @import "tailwindcss";
-body{
+
+body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-@layer components{
-    .gradient-background{
+
+@layer components {
+    .gradient-background {
         background: #ededed;
         background: linear-gradient(28deg, rgba(237, 237, 237, 1) 0%, rgba(247, 247, 247, 1) 50%, rgba(235, 235, 235, 1) 100%);
     }
-    .hero-section{
-        @apply w-full h-screen flex flex-col items-center justify-center gap-6 ;
+
+    .hero-section {
+        @apply w-full h-screen flex flex-col items-center justify-center gap-6;
     }
-    .company-name{
-        background: linear-gradient(to right, #4776E6 0%, #8E54E9  51%, #4776E6  100%);
+
+    .company-name {
+        background: linear-gradient(to right, #4776E6 0%, #8E54E9 51%, #4776E6 100%);
         background-clip: text;
         -webkit-background-clip: text;
-        color:transparent;
+        color: transparent;
     }
+
     .blue-gradient {
-        background: linear-gradient(to right, #4776E6 0%, #8E54E9  51%, #4776E6  100%);
+        background: linear-gradient(to right, #4776E6 0%, #8E54E9 51%, #4776E6 100%);
     }
-    .view-post-button{
+
+    .view-post-button {
         @apply text-xl bg-blue-700 text-white font-semibold px-6 py-2 rounded-[40px] transition-shadow duration-300 cursor-pointer hover:shadow-[0px_4px_10px_#888888] hover:transition-shadow hover:duration-300 max-sm:text-lg;
     }
-    .table-data{
+
+    .table-data {
         @apply px-3 py-1.5 text-center text-gray-500;
     }
-    .label-component{
-        @apply text-lg text-gray-800 font-medium flex items-center gap-1 w-full; 
+
+    .label-component {
+        @apply text-lg text-gray-800 font-medium flex items-center gap-1 w-full;
         @apply max-sm:text-[1rem];
     }
-    .input-component{
+
+    .input-component {
         @apply border-[1px] border-gray-500 px-4 py-2 rounded-sm text-[1rem] w-full focus-visible:outline-0 focus-visible:shadow-lg;
         @apply max-sm:text-[0.9rem];
     }
-    .transparent-black{
-        background: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4));
+
+    .transparent-black {
+        background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4));
     }
-    .dialog-component-container{
-        @apply bg-[#f9f9f9] shadow-2xl md:w-[550px] sm:w-[400px]  px-8 py-10 rounded-[10px] flex flex-col justify-between gap-6 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50;
-        @apply  max-sm:w-[300px] max-sm:py-6 max-sm:px-6;
+
+    .dialog-component-container {
+        @apply bg-[#f9f9f9] shadow-2xl md:w-[550px] sm:w-[400px] px-8 py-10 rounded-[10px] flex flex-col justify-between gap-6 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50;
+        @apply max-sm:w-[300px] max-sm:py-6 max-sm:px-6;
     }
-    .skeleton{
+
+    .skeleton {
         background: #eee;
-    background: linear-gradient(110deg, #ececec 8%, #f5f5f5 18%, #ececec 33%);
+        background: linear-gradient(110deg, #ececec 8%, #f5f5f5 18%, #ececec 33%);
         border-radius: 5px;
         background-size: 200% 100%;
         animation: 1.5s shine linear infinite;
     }
+
     @keyframes shine {
         to {
             background-position-x: -200%;
