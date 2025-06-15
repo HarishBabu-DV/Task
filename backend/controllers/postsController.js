@@ -4,7 +4,7 @@ const posts=require('../models/posts')
 const storePosts=async (req,res) => {
     try {
         const postsToStore=req.body
-        if (!Array.isArray(storedPosts)) {
+        if (!Array.isArray(postsToStore)) {
             return res.status(400).json({ message: 'Data must be an array' });
         }
         //create new post
