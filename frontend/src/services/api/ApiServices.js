@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API=axios.create({
-    baseURL:'https://mern-stack-task-xo7j.onrender.com'
+    baseURL:process.env.VITE_BASEURI
 })
 //Store posts retrieved from json placeholder
 const storePosts=async (listOfPosts)=>{
