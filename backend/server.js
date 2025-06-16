@@ -19,7 +19,7 @@ app.use(cors())
 //Middleware to evaluate whether the request is in json format
 app.use(express.json())
 //Route to welcome page
-app.use('/',(req,res)=>{
+app.get('/',(req,res)=>{
     res.send('Hello User!')
 })
 //Route to home page
