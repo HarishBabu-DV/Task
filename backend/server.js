@@ -18,6 +18,10 @@ const PORT=process.env.PORT || 3000
 app.use(cors())
 //Middleware to evaluate whether the request is in json format
 app.use(express.json())
+//Route to welcome page
+app.use('/',(req,res)=>{
+    res.send('Hello world')
+})
 //Route to home page
 app.use('/api/v1/home',homeRoutes)
 //Route to posts page
