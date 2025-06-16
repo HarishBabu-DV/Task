@@ -20,7 +20,7 @@ app.use(cors())
 app.use(express.json())
 //Route to welcome page
 app.use('/',(req,res)=>{
-    res.send('Hello world')
+    res.send('Hello User!')
 })
 //Route to home page
 app.use('/api/v1/home',homeRoutes)
